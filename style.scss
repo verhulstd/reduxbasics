@@ -1,0 +1,14 @@
+ul li {
+  display: flex;
+  &.checked {
+    span {
+      text-decoration: line-through;
+    }
+  }
+  span {
+    margin-right: auto;
+  }
+  a:last-child {
+    margin-left: 10px;
+  }
+}

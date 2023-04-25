@@ -6,6 +6,7 @@ import { composeWithDevTools } from "@redux-devtools/extension";
 
 import counterReducer from "./counter";
 import friendsReducer from "./friends";
+import todosReducer from "./todos";
 
 // const myLogger = function (store) {
 //   return function (next) {
@@ -25,6 +26,7 @@ import friendsReducer from "./friends";
 const rootReducer = combineReducers({
   counterState: counterReducer,
   friendsState: friendsReducer,
+  todosState: todosReducer,
 });
 
 const middleware = composeWithDevTools(applyMiddleware(logger));
