@@ -79,10 +79,8 @@ function renderCocktails() {
       .join("");
   }
 }
-
 renderCocktails();
 store.subscribe(renderCocktails);
-
 document.querySelector("form:last-of-type").onsubmit = function (e) {
   e.preventDefault();
   store.dispatch(
