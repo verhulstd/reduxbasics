@@ -13,6 +13,7 @@ export const addTodo = (str) => ({
   type: ADDTODO,
   payload: str,
 });
+
 export const removeTodo = (id) => ({
   type: REMOVETODO,
   payload: id,

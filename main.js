@@ -3,6 +3,7 @@ import "./style.scss";
 import store from "./store";
 import { incrementAction, decrementAction } from "./store/counter";
 import { addTodo, toggleTodo, removeTodo } from "./store/todos";
+import { searchCocktails } from "./store/cocktails";
 function renderCounter() {
   const { counter } = store.getState().counterState;
   document.querySelector("h2 span").innerText = counter;
@@ -17,7 +18,7 @@ function renderFriends() {
 
 function renderTodos() {
   const { todos } = store.getState().todosState;
-  document.querySelector("ul:last-child").innerHTML = todos
+  document.querySelector("ul:last-of-type").innerHTML = todos
     .map(
       ({ name, id, checked }) => `
         <li class="${checked ? "checked" : ""}" data-id="${id}">
@@ -52,7 +53,7 @@ document.querySelector("form").onsubmit = (e) => {
   document.querySelector("input").value = "";
 };
 
-document.querySelector("ul:last-child").onclick = function (e) {
+document.querySelector("ul:last-of-type").onclick = function (e) {
   e.preventDefault();
   if (e.target.classList.contains("remove")) {
     store.dispatch(removeTodo(e.target.parentElement.dataset.id));
@@ -60,4 +61,32 @@ document.querySelector("ul:last-child").onclick = function (e) {
   if (e.target.classList.contains("check")) {
     store.dispatch(toggleTodo(e.target.parentElement.dataset.id));
   }
+};
+
+function renderCocktails() {
+  const { loading, cocktails, searchValue } = store.getState().cocktailsState;
+  document.querySelector(".loading").style.display = loading ? "block" : "none";
+  if (cocktails.length > 0) {
+    document.querySelector("section").innerHTML = cocktails
+      .map(
+        ({ strDrink, strDrinkThumb, idDrink }) => `
+        <aside>
+            <img src="${strDrinkThumb}" alt="${strDrink}" />
+            <p>${strDrink} (${idDrink})</p>
+        </aside>    
+    `
+      )
+      .join("");
+  }
+}
+
+renderCocktails();
+store.subscribe(renderCocktails);
+
+document.querySelector("form:last-of-type").onsubmit = function (e) {
+  e.preventDefault();
+  store.dispatch(
+    searchCocktails(document.querySelector("form:last-of-type input").value)
+  );
+  document.querySelector("form:last-of-type input").value = "";
 };

@@ -1,5 +1,6 @@
 import { createStore, applyMiddleware, combineReducers } from "redux";
 import logger from "redux-logger";
+import thunk from "redux-thunk";
 import { composeWithDevTools } from "@redux-devtools/extension";
 // in deze file worden alles reducers geimporteerd en de store aangemaakt
 // de functies dat uitgevoerd moeten worden als de state wijzigt worden ook gekoppeld aan de store
@@ -7,6 +8,7 @@ import { composeWithDevTools } from "@redux-devtools/extension";
 import counterReducer from "./counter";
 import friendsReducer from "./friends";
 import todosReducer from "./todos";
+import cocktailsReducer from "./cocktails";
 
 // const myLogger = function (store) {
 //   return function (next) {
@@ -27,8 +29,9 @@ const rootReducer = combineReducers({
   counterState: counterReducer,
   friendsState: friendsReducer,
   todosState: todosReducer,
+  cocktailsState: cocktailsReducer,
 });
 
-const middleware = composeWithDevTools(applyMiddleware(logger));
+const middleware = composeWithDevTools(applyMiddleware(thunk, logger));
 
 export default createStore(rootReducer, middleware);
